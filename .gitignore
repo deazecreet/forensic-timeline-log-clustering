@@ -1,0 +1,26 @@
+# Local raw dataset and downloaded archives
+timeline.csv
+data/raw/
+data/external/
+*.zip
+
+# Python/runtime caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Large generated artifacts; compact reports in reports/week1 stay trackable
+reports/**/*.joblib
+reports/**/*.pkl
+reports/**/*.npy
+reports/**/*.npz
+reports/**/sample*.csv
+reports/**/embeddings*

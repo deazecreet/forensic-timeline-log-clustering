@@ -1,0 +1,452 @@
+{
+  "input_file": "timeline.csv",
+  "file_size_bytes": 771868105,
+  "required_columns": [
+    "datetime",
+    "timestamp_desc",
+    "source",
+    "source_long",
+    "message",
+    "parser",
+    "display_name",
+    "tag"
+  ],
+  "year_filter": {
+    "min_year": 2000,
+    "max_year": 2026
+  },
+  "total_rows": 2233799,
+  "valid_rows": 2175779,
+  "invalid_or_empty_rows": 58020,
+  "blank_message_rows": 0,
+  "valid_datetime_min": "2000-01-07T16:20:34.000000+00:00",
+  "valid_datetime_max": "2026-12-24T08:36:08.000000+00:00",
+  "message_length": {
+    "min": 3,
+    "average": 171.61,
+    "max": 2304741
+  },
+  "source_counts": {
+    "AMCACHE": 781,
+    "EVT": 59632,
+    "FILE": 1492460,
+    "LNK": 407,
+    "LOG": 586,
+    "OLECF": 1711,
+    "PE": 89704,
+    "REG": 586761,
+    "WEBHIST": 1757
+  },
+  "source_counts_valid": {
+    "AMCACHE": 384,
+    "EVT": 59632,
+    "FILE": 1492389,
+    "LNK": 174,
+    "LOG": 586,
+    "OLECF": 1703,
+    "PE": 32507,
+    "REG": 586662,
+    "WEBHIST": 1742
+  },
+  "source_counts_invalid_or_empty": {
+    "AMCACHE": 397,
+    "FILE": 71,
+    "LNK": 233,
+    "OLECF": 8,
+    "PE": 57197,
+    "REG": 99,
+    "WEBHIST": 15
+  },
+  "valid_year_counts": {
+    "2000": 371,
+    "2001": 367,
+    "2002": 406,
+    "2003": 302,
+    "2004": 351,
+    "2005": 334,
+    "2006": 382,
+    "2007": 306,
+    "2008": 1014,
+    "2009": 348,
+    "2010": 355,
+    "2011": 541,
+    "2012": 844,
+    "2013": 516,
+    "2014": 1260,
+    "2015": 6202,
+    "2016": 26418,
+    "2017": 4637,
+    "2018": 3343,
+    "2019": 11971,
+    "2020": 1613,
+    "2021": 5525,
+    "2022": 654817,
+    "2023": 1452295,
+    "2024": 473,
+    "2025": 405,
+    "2026": 383
+  },
+  "top_sources": [
+    {
+      "value": "FILE",
+      "count": 1492460
+    },
+    {
+      "value": "REG",
+      "count": 586761
+    },
+    {
+      "value": "PE",
+      "count": 89704
+    },
+    {
+      "value": "EVT",
+      "count": 59632
+    },
+    {
+      "value": "WEBHIST",
+      "count": 1757
+    },
+    {
+      "value": "OLECF",
+      "count": 1711
+    },
+    {
+      "value": "AMCACHE",
+      "count": 781
+    },
+    {
+      "value": "LOG",
+      "count": 586
+    },
+    {
+      "value": "LNK",
+      "count": 407
+    }
+  ],
+  "top_valid_sources": [
+    {
+      "value": "FILE",
+      "count": 1492389
+    },
+    {
+      "value": "REG",
+      "count": 586662
+    },
+    {
+      "value": "EVT",
+      "count": 59632
+    },
+    {
+      "value": "PE",
+      "count": 32507
+    },
+    {
+      "value": "WEBHIST",
+      "count": 1742
+    },
+    {
+      "value": "OLECF",
+      "count": 1703
+    },
+    {
+      "value": "LOG",
+      "count": 586
+    },
+    {
+      "value": "AMCACHE",
+      "count": 384
+    },
+    {
+      "value": "LNK",
+      "count": 174
+    }
+  ],
+  "top_timestamp_desc": [
+    {
+      "value": "Content Modification Time",
+      "count": 922243
+    },
+    {
+      "value": "Metadata Modification Time",
+      "count": 643541
+    },
+    {
+      "value": "Creation Time",
+      "count": 373301
+    },
+    {
+      "value": "Last Access Time",
+      "count": 283307
+    },
+    {
+      "value": "Not a time",
+      "count": 8034
+    },
+    {
+      "value": "Link Time",
+      "count": 781
+    },
+    {
+      "value": "Item Modification Time",
+      "count": 380
+    },
+    {
+      "value": "Document Creation Time",
+      "count": 376
+    },
+    {
+      "value": "Document Last Save Time",
+      "count": 372
+    },
+    {
+      "value": "Expiration Time",
+      "count": 253
+    },
+    {
+      "value": "Last registered Time",
+      "count": 221
+    },
+    {
+      "value": "File Last Modification Time",
+      "count": 174
+    },
+    {
+      "value": "Last Time Executed",
+      "count": 171
+    },
+    {
+      "value": "Synchronization Time",
+      "count": 166
+    },
+    {
+      "value": "Previous Last Time Executed",
+      "count": 159
+    },
+    {
+      "value": "Added Time",
+      "count": 74
+    },
+    {
+      "value": "Launch Time",
+      "count": 68
+    },
+    {
+      "value": "Unknown Time",
+      "count": 59
+    },
+    {
+      "value": "End Time",
+      "count": 54
+    },
+    {
+      "value": "Last Visited Time",
+      "count": 40
+    }
+  ],
+  "top_parsers": [
+    {
+      "value": "filestat",
+      "count": 1130884
+    },
+    {
+      "value": "winreg/winreg_default",
+      "count": 584505
+    },
+    {
+      "value": "usnjrnl",
+      "count": 360967
+    },
+    {
+      "value": "pe",
+      "count": 89704
+    },
+    {
+      "value": "winevtx",
+      "count": 59632
+    },
+    {
+      "value": "winreg/amcache",
+      "count": 1400
+    },
+    {
+      "value": "olecf/olecf_summary",
+      "count": 1120
+    },
+    {
+      "value": "esedb/msie_webcache",
+      "count": 717
+    },
+    {
+      "value": "winreg/windows_services",
+      "count": 685
+    },
+    {
+      "value": "chrome_cache",
+      "count": 634
+    },
+    {
+      "value": "olecf/olecf_default",
+      "count": 579
+    },
+    {
+      "value": "winreg/windows_task_cache",
+      "count": 569
+    },
+    {
+      "value": "lnk/shell_items",
+      "count": 540
+    },
+    {
+      "value": "prefetch",
+      "count": 425
+    },
+    {
+      "value": "lnk",
+      "count": 401
+    },
+    {
+      "value": "winreg/appcompatcache",
+      "count": 267
+    },
+    {
+      "value": "sqlite/chrome_66_cookies",
+      "count": 168
+    },
+    {
+      "value": "sqlite/firefox_10_cookies",
+      "count": 144
+    },
+    {
+      "value": "text/setupapi",
+      "count": 101
+    },
+    {
+      "value": "custom_destinations/lnk/shell_items",
+      "count": 69
+    }
+  ],
+  "top_tags": [
+    {
+      "value": "-",
+      "count": 2233799
+    }
+  ],
+  "examples_valid": [
+    {
+      "datetime": "2000-01-07T16:20:34.000000+00:00",
+      "source": "PE",
+      "timestamp_desc": "Content Modification Time",
+      "message": "PE Type: Dynamic Link Library (DLL) Import hash: ace64f92359bb54a9f6d5167468fbf7f Export DLL name: dxpps.dll"
+    },
+    {
+      "datetime": "2000-01-07T16:20:34.000000+00:00",
+      "source": "PE",
+      "timestamp_desc": "Creation Time",
+      "message": "PE Type: Dynamic Link Library (DLL) Import hash: ace64f92359bb54a9f6d5167468fbf7f Export DLL name: dxpps.dll"
+    },
+    {
+      "datetime": "2000-01-07T16:20:34.000000+00:00",
+      "source": "PE",
+      "timestamp_desc": "Content Modification Time",
+      "message": "PE Type: Dynamic Link Library (DLL) Import hash: ace64f92359bb54a9f6d5167468fbf7f Export DLL name: dxpps.dll"
+    },
+    {
+      "datetime": "2000-01-07T16:20:34.000000+00:00",
+      "source": "PE",
+      "timestamp_desc": "Creation Time",
+      "message": "PE Type: Dynamic Link Library (DLL) Import hash: ace64f92359bb54a9f6d5167468fbf7f Export DLL name: dxpps.dll"
+    },
+    {
+      "datetime": "2000-01-07T16:20:34.000000+00:00",
+      "source": "PE",
+      "timestamp_desc": "Content Modification Time",
+      "message": "PE Type: Dynamic Link Library (DLL) Import hash: ace64f92359bb54a9f6d5167468fbf7f Export DLL name: dxpps.dll"
+    }
+  ],
+  "examples_invalid_or_empty": [
+    {
+      "datetime": "1601-01-01T00:00:00.000000+00:00",
+      "source": "WEBHIST",
+      "timestamp_desc": "Expiration Time",
+      "message": "http://api.msn.com/auth/cookie (_C_Auth) Flags: [HTTP only] = False [Persistent] = False"
+    },
+    {
+      "datetime": "1601-01-01T00:00:00.000000+00:00",
+      "source": "WEBHIST",
+      "timestamp_desc": "Expiration Time",
+      "message": "http://assets.msn.com/service/news/feed/pages (_C_Auth) Flags: [HTTP only] = False [Persistent] = False"
+    },
+    {
+      "datetime": "1601-01-01T00:00:00.000000+00:00",
+      "source": "WEBHIST",
+      "timestamp_desc": "Expiration Time",
+      "message": "http://bing.cn/ (MUID) Flags: [HTTP only] = False [Persistent] = False"
+    },
+    {
+      "datetime": "1601-01-01T00:00:00.000000+00:00",
+      "source": "WEBHIST",
+      "timestamp_desc": "Last Access Time",
+      "message": "http://bing.cn/ (MUID) Flags: [HTTP only] = False [Persistent] = False"
+    },
+    {
+      "datetime": "1601-01-01T00:00:00.000000+00:00",
+      "source": "WEBHIST",
+      "timestamp_desc": "Expiration Time",
+      "message": "http://bing.com/ (MUID) Flags: [HTTP only] = False [Persistent] = False"
+    }
+  ],
+  "profiling_time_s": 7.809,
+  "sample": {
+    "requested_sample_size": 100000,
+    "actual_sample_size": 100000,
+    "seed": 42,
+    "sampling_time_s": 35.419,
+    "quotas_by_source": {
+      "AMCACHE": 18,
+      "EVT": 2741,
+      "FILE": 68591,
+      "LNK": 8,
+      "LOG": 27,
+      "OLECF": 78,
+      "PE": 1494,
+      "REG": 26963,
+      "WEBHIST": 80
+    },
+    "actual_counts_by_source": {
+      "AMCACHE": 18,
+      "EVT": 2741,
+      "FILE": 68591,
+      "LNK": 8,
+      "LOG": 27,
+      "OLECF": 78,
+      "PE": 1494,
+      "REG": 26963,
+      "WEBHIST": 80
+    }
+  },
+  "tfidf": {
+    "max_features": 5000,
+    "actual_features": 5000,
+    "min_df": 5,
+    "max_df": 0.95,
+    "ngram_range": [
+      1,
+      2
+    ]
+  },
+  "dimensionality_reduction": {
+    "method": "TruncatedSVD + Normalizer",
+    "requested_components": 50,
+    "actual_components": 50
+  },
+  "clustering": {
+    "method": "KMeans",
+    "k_values": [
+      10,
+      20,
+      50
+    ],
+    "seed": 42
+  }
+}
