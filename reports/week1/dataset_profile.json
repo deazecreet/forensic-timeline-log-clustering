@@ -396,33 +396,33 @@
       "message": "http://bing.com/ (MUID) Flags: [HTTP only] = False [Persistent] = False"
     }
   ],
-  "profiling_time_s": 7.488,
+  "profiling_time_s": 7.72,
   "sample": {
-    "requested_sample_size": 100000,
-    "actual_sample_size": 100000,
+    "requested_sample_size": 50000,
+    "actual_sample_size": 50000,
     "seed": 42,
-    "sampling_time_s": 34.781,
+    "sampling_time_s": 35.512,
     "quotas_by_source": {
-      "AMCACHE": 18,
-      "EVT": 2741,
-      "FILE": 68591,
-      "LNK": 8,
-      "LOG": 27,
-      "OLECF": 78,
-      "PE": 1494,
-      "REG": 26963,
-      "WEBHIST": 80
+      "AMCACHE": 9,
+      "EVT": 1370,
+      "FILE": 34296,
+      "LNK": 4,
+      "LOG": 13,
+      "OLECF": 39,
+      "PE": 747,
+      "REG": 13482,
+      "WEBHIST": 40
     },
     "actual_counts_by_source": {
-      "AMCACHE": 18,
-      "EVT": 2741,
-      "FILE": 68591,
-      "LNK": 8,
-      "LOG": 27,
-      "OLECF": 78,
-      "PE": 1494,
-      "REG": 26963,
-      "WEBHIST": 80
+      "AMCACHE": 9,
+      "EVT": 1370,
+      "FILE": 34296,
+      "LNK": 4,
+      "LOG": 13,
+      "OLECF": 39,
+      "PE": 747,
+      "REG": 13482,
+      "WEBHIST": 40
     }
   },
   "tfidf": {
