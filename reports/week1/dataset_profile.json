@@ -396,12 +396,12 @@
       "message": "http://bing.com/ (MUID) Flags: [HTTP only] = False [Persistent] = False"
     }
   ],
-  "profiling_time_s": 7.809,
+  "profiling_time_s": 7.488,
   "sample": {
     "requested_sample_size": 100000,
     "actual_sample_size": 100000,
     "seed": 42,
-    "sampling_time_s": 35.419,
+    "sampling_time_s": 34.781,
     "quotas_by_source": {
       "AMCACHE": 18,
       "EVT": 2741,
