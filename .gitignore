@@ -24,3 +24,6 @@ reports/**/*.npy
 reports/**/*.npz
 reports/**/sample*.csv
 reports/**/embeddings*
+
+# Week Progress on Markdown
+week_progress/

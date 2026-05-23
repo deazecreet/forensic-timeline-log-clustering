@@ -405,7 +405,7 @@ def run_week1(
     *,
     input_path: Path,
     output_dir: Path,
-    sample_size: int = 100_000,
+    sample_size: int = 50_000,
     seed: int = 42,
     k_values: list[int] | None = None,
     max_features: int = 5000,
@@ -553,7 +553,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Run Week 1 log clustering baseline.")
     parser.add_argument("--input", type=Path, default=Path("timeline.csv"), help="Path to Plaso timeline CSV.")
     parser.add_argument("--output", type=Path, default=Path("reports/week1"), help="Output report directory.")
-    parser.add_argument("--sample-size", type=int, default=100_000, help="Valid events to sample.")
+    parser.add_argument("--sample-size", type=int, default=50_000, help="Valid events to sample.")
     parser.add_argument("--seed", type=int, default=42, help="Random seed.")
     parser.add_argument("--k-values", type=parse_k_values, default=[10, 20, 50], help="Comma-separated k values.")
     parser.add_argument("--max-features", type=int, default=5000, help="TF-IDF max_features.")
