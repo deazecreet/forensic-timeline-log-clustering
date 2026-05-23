@@ -1,0 +1,5 @@
+representation,sample_size,seed,embedding_time_s,peak_memory_mb,device,embedding_cache_key,embedding_cache_path,embedding_cache_hit,embedding_load_time_s,embedding_dimensions,requested_pca_components,pca_applied,effective_dimensions,pca_explained_variance_ratio,tfidf_features,tfidf_max_features,tfidf_min_df,tfidf_max_df,tfidf_svd_applied,tfidf_svd_components
+tfidf,50000,42,3.091,110.142,cpu,tfidf_21e201679651b82c,reports\week2\cache\tfidf_21e201679651b82c.npz,False,,50,50,False,50,,5000.0,5000.0,5.0,0.95,True,50.0
+word2vec,50000,42,0.055,38.198,cpu,word2vec_da1df13ea1ae6270,reports\week2\cache\word2vec_da1df13ea1ae6270.npz,True,0.055,100,50,True,50,0.9960249066352844,,,,,,
+doc2vec,50000,42,0.109,38.159,cpu,doc2vec_d22244dd639d469e,reports\week2\cache\doc2vec_d22244dd639d469e.npz,True,0.108,100,50,True,50,0.984565258026123,,,,,,
+sbert,50000,42,0.247,146.533,cuda,sbert_971eb128b1741a38,reports\week2\cache\sbert_971eb128b1741a38.npz,True,0.247,384,50,True,50,0.898937463760376,,,,,,
