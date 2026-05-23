@@ -19,11 +19,22 @@ Target Pekan 1:
 
 - profiling dataset Plaso CSV
 - preprocessing pesan log
-- sampling stratified 100.000 event valid berdasarkan `source`
+- sampling stratified 50.000 event valid berdasarkan `source`
 - baseline TF-IDF
 - reduksi dimensi 50D dengan TruncatedSVD
 - baseline K-Means untuk `k=10,20,50`
 - export metrik, ringkasan cluster, dan plot kecil
+
+## Pekan 2
+
+Target Pekan 2:
+
+- representasi teks dense dengan TF-IDF, Word2Vec, Doc2Vec, dan Sentence-BERT
+- reduksi dimensi PCA 50D sebelum clustering
+- clustering dengan K-Means, DBSCAN, HDBSCAN, Agglomerative Clustering, dan GMM
+- tuning parameter sederhana per algoritma
+- evaluasi internal dengan Silhouette, Calinski-Harabasz, Davies-Bouldin, jumlah cluster, noise ratio, waktu komputasi, dan peak memory
+- export metrik, seluruh trial tuning, ringkasan cluster, dan plot perbandingan awal
 
 ## Instalasi
 
@@ -34,7 +45,7 @@ pip install -r requirements.txt
 ## Menjalankan Baseline
 
 ```bash
-python -m log_clustering.week1 --input timeline.csv --sample-size 100000 --seed 42 --k-values 10,20,50 --output reports/week1
+python -m log_clustering.week1 --input timeline.csv --sample-size 50000 --seed 42 --k-values 10,20,50 --output reports/week1
 ```
 
 Output utama:
@@ -46,6 +57,52 @@ Output utama:
 - `reports/week1/elbow_inertia.png`
 - `reports/week1/silhouette_scores.png`
 - `reports/week1/source_distribution_sample.png`
+
+## Menjalankan Eksperimen Pekan 2
+
+Run cepat tanpa SBERT, cocok untuk validasi lokal:
+
+```bash
+python -m log_clustering.week2 --input timeline.csv --sample-size 50000 --representations tfidf,word2vec,doc2vec --clustering-methods kmeans,dbscan,hdbscan,agglomerative,gmm --output reports/week2_quick
+```
+
+Run sesuai scope Pekan 2 yang diminta:
+
+```bash
+python -m log_clustering.week2 --input timeline.csv --sample-size 50000 --representations tfidf,word2vec,doc2vec,sbert --clustering-methods kmeans,dbscan,hdbscan,agglomerative,gmm --experiment-mode optimal --sbert-device auto --seed 42 --output reports/week2
+```
+
+Eksperimen juga bisa dijalankan bertahap ke folder output yang sama. Output Week 2 akan otomatis digabung dan plot perbandingan akan dibuat ulang dari hasil gabungan:
+
+```bash
+python -m log_clustering.week2 --input timeline.csv --sample-size 50000 --representations tfidf --clustering-methods kmeans,dbscan,hdbscan,agglomerative,gmm --seed 42 --output reports/week2
+python -m log_clustering.week2 --input timeline.csv --sample-size 50000 --representations word2vec --clustering-methods kmeans,dbscan,hdbscan,agglomerative,gmm --seed 42 --output reports/week2
+python -m log_clustering.week2 --input timeline.csv --sample-size 50000 --representations doc2vec --clustering-methods kmeans,dbscan,hdbscan,agglomerative,gmm --seed 42 --output reports/week2
+python -m log_clustering.week2 --input timeline.csv --sample-size 50000 --representations sbert --clustering-methods kmeans,dbscan,hdbscan,agglomerative,gmm --sbert-device auto --seed 42 --output reports/week2
+```
+
+Embedding otomatis disimpan sebagai cache di `reports/week2/cache/`. Jika representasi, dataset, sample size, seed, dan parameter embedding sama, run berikutnya akan memakai cache tersebut sehingga bisa menjalankan clustering tambahan tanpa menghitung ulang Word2Vec, Doc2Vec, atau SBERT. Gunakan `--no-embedding-cache` jika ingin memaksa embedding dihitung ulang.
+
+Mode default `--experiment-mode optimal` mencari parameter terbaik untuk skenario inti. Untuk Agglomerative/GMM, kandidat default-nya adalah `2,3,4,5,8,10,15,20,30,40,50,75,100`. Mode `--experiment-mode k-sensitivity` disiapkan untuk eksperimen tambahan nanti dan memakai kandidat `10,20,50`.
+
+Output utama:
+
+- `reports/week2/metrics_week2.csv`
+- `reports/week2/trials_week2.csv`
+- `reports/week2/embedding_profile_week2.csv`
+- `reports/week2/cluster_summary_week2.csv`
+- `reports/week2/source_by_cluster_week2.csv`
+- `reports/week2/run_config_week2.json`
+- `reports/week2/silhouette_heatmap_week2.png`
+- `reports/week2/quality_runtime_week2.png`
+
+Catatan: SBERT memakai model `all-MiniLM-L6-v2` dan akan mengunduh model dari Hugging Face pada run pertama jika belum ada di cache lokal. Opsi `--sbert-device auto` akan memakai GPU CUDA jika PyTorch mendeteksinya; gunakan `--sbert-device cuda` jika ingin memaksa GPU dan gagal cepat ketika CUDA belum aktif.
+
+Jika PC memiliki NVIDIA GPU tetapi `torch.cuda.is_available()` masih `False`, install PyTorch CUDA build terlebih dahulu. Contoh untuk CUDA 12.8:
+
+```bash
+python -m pip install --upgrade --force-reinstall torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+```
 
 ## Preprocessing
 
@@ -76,7 +133,7 @@ Test mencakup preprocessing dan smoke test pipeline dengan CSV mini.
 
 ## Hasil Pekan 1
 
-Dataset lokal berisi 2.233.799 event. Dengan filter tahun `2000-2026` dan pesan tidak kosong, terdapat 2.175.779 event valid. Pipeline memakai stratified sample 100.000 event untuk baseline awal.
+Dataset lokal berisi 2.233.799 event. Dengan filter tahun `2000-2026` dan pesan tidak kosong, terdapat 2.175.779 event valid. Pipeline memakai stratified sample 50.000 event untuk baseline awal.
 
 Distribusi sample:
 
@@ -96,8 +153,10 @@ Ringkasan baseline TF-IDF + K-Means:
 
 | k | Silhouette | Calinski-Harabasz | Davies-Bouldin | Inertia |
 | ---: | ---: | ---: | ---: | ---: |
-| 10 | 0.6105 | 26164.24 | 1.3492 | 22887.27 |
-| 20 | 0.6438 | 25298.43 | 1.2739 | 13221.70 |
-| 50 | 0.7325 | 27389.34 | 0.8898 | 5322.28 |
+| 10 | 0.5586 | 24013.23 | 1.5412 | 24232.81 |
+| 20 | 0.6312 | 24522.99 | 1.3693 | 13534.56 |
+| 50 | 0.7261 | 26010.45 | 0.8435 | 5571.01 |
 
 Pada baseline Pekan 1, `k=50` memberi Silhouette tertinggi dan Davies-Bouldin terendah dari tiga nilai `k` yang diuji. Detail lengkap tersedia di `reports/week1/metrics_week1.csv` dan `reports/week1/cluster_summary_week1.csv`.
+
+
