@@ -1,0 +1,29 @@
+{
+  "input_file": "timeline.csv",
+  "week2_dir": "reports\\week2",
+  "output_dir": "reports\\week3",
+  "sample_size": 50000,
+  "seed": 42,
+  "representations": [
+    "tfidf",
+    "word2vec",
+    "doc2vec",
+    "sbert"
+  ],
+  "clustering_methods": [
+    "kmeans",
+    "dbscan",
+    "hdbscan",
+    "agglomerative",
+    "gmm"
+  ],
+  "scatter_methods": [
+    "pca",
+    "umap",
+    "tsne"
+  ],
+  "max_viz_points": 4000,
+  "max_timeline_points": 10000,
+  "max_dendrogram_points": 1000,
+  "generated_file_count": 148
+}
