@@ -1,5 +1,6 @@
 # Local raw dataset and downloaded archives
 timeline.csv
+Log clustering.pdf
 data/raw/
 data/external/
 *.zip
@@ -25,5 +26,5 @@ reports/**/*.npz
 reports/**/sample*.csv
 reports/**/embeddings*
 
-# Week Progress on Markdown
+# Local week progress notes
 week_progress/

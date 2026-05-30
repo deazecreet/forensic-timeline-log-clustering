@@ -1,6 +1,6 @@
 # Log Clustering for Forensic Timeline Analysis
 
-Repository ini berisi implementasi Pekan 1 untuk mini project **Log Clustering for Forensic Timeline Analysis** pada output CSV log2timeline/Plaso.
+Repository ini berisi implementasi mini project **Log Clustering for Forensic Timeline Analysis** pada output CSV log2timeline/Plaso. Saat ini repository sudah mencakup pipeline Pekan 1, Pekan 2, dan Pekan 3.
 
 ## Dataset
 
@@ -25,6 +25,8 @@ Target Pekan 1:
 - baseline K-Means untuk `k=10,20,50`
 - export metrik, ringkasan cluster, dan plot kecil
 
+Catatan progress detail tersedia secara lokal di `week_progress/`, tetapi folder tersebut di-ignore dari Git.
+
 ## Pekan 2
 
 Target Pekan 2:
@@ -35,6 +37,31 @@ Target Pekan 2:
 - tuning parameter sederhana per algoritma
 - evaluasi internal dengan Silhouette, Calinski-Harabasz, Davies-Bouldin, jumlah cluster, noise ratio, waktu komputasi, dan peak memory
 - export metrik, seluruh trial tuning, ringkasan cluster, dan plot perbandingan awal
+
+Catatan progress detail tersedia secara lokal di `week_progress/`, tetapi folder tersebut di-ignore dari Git.
+
+## Pekan 3
+
+Target Pekan 3:
+
+- rekonstruksi label cluster terbaik dari hasil Pekan 2
+- visualisasi PCA, UMAP, dan t-SNE untuk setiap kombinasi representasi dan clustering
+- dendrogram untuk Agglomerative Clustering
+- visualisasi timeline event terhadap cluster
+- visualisasi distribusi source dan top terms untuk membaca makna cluster
+- interpretability assessment untuk menilai apakah cluster bermakna secara forensik
+- laporan Markdown yang merangkum hasil visualisasi, analisis komparatif, batasan, dan rekomendasi inspeksi
+
+Catatan progress detail tersedia secara lokal di `week_progress/`, tetapi folder tersebut di-ignore dari Git.
+
+## Status Scope
+
+| Scope | Status | Output Utama |
+| --- | --- | --- |
+| Pekan 1 | Selesai | `reports/week1/` |
+| Pekan 2 | Selesai | `reports/week2/` |
+| Pekan 3 | Selesai | `reports/week3/` |
+| Pekan 4 | Belum dilakukan | Full 5-seed run, k-sensitivity, cross-dataset validation, final report |
 
 ## Instalasi
 
@@ -95,6 +122,28 @@ Output utama:
 - `reports/week2/run_config_week2.json`
 - `reports/week2/silhouette_heatmap_week2.png`
 - `reports/week2/quality_runtime_week2.png`
+
+## Menjalankan Analisis Pekan 3
+
+Pipeline Pekan 3 memakai output Pekan 2 sebagai input. Jalankan setelah `reports/week2` berisi metrik, ringkasan cluster, source distribution, dan cache embedding:
+
+```bash
+python -m log_clustering.week3 --input timeline.csv --week2-dir reports/week2 --output reports/week3
+```
+
+Output utama:
+
+- `reports/week3/interpretability_assessment_week3.csv`
+- `reports/week3/cluster_interpretability_week3.csv`
+- `reports/week3/sample_metadata_week3.csv`
+- `reports/week3/labels/*.csv`
+- `reports/week3/scatter/pca/*.png`
+- `reports/week3/scatter/umap/*.png`
+- `reports/week3/scatter/tsne/*.png`
+- `reports/week3/dendrograms/*.png`
+- `reports/week3/timelines/*.png`
+- `reports/week3/source_distribution/*.png`
+- `reports/week3/top_terms/*.png`
 
 Catatan: SBERT memakai model `all-MiniLM-L6-v2` dan akan mengunduh model dari Hugging Face pada run pertama jika belum ada di cache lokal. Opsi `--sbert-device auto` akan memakai GPU CUDA jika PyTorch mendeteksinya; gunakan `--sbert-device cuda` jika ingin memaksa GPU dan gagal cepat ketika CUDA belum aktif.
 
