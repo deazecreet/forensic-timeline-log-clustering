@@ -22,8 +22,8 @@
     "umap",
     "tsne"
   ],
-  "max_viz_points": 4000,
+  "max_viz_points": 1000,
   "max_timeline_points": 10000,
   "max_dendrogram_points": 1000,
-  "generated_file_count": 148
+  "generated_file_count": 153
 }

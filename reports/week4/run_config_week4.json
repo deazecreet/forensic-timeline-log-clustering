@@ -1,0 +1,41 @@
+{
+  "primary_input": "timeline.csv",
+  "secondary_input": "data\\external\\timeline.csv",
+  "primary_week2_dir": "reports\\week2",
+  "primary_runs_root": "reports\\week4_pilot",
+  "output_dir": "reports\\week4",
+  "seeds": [
+    42,
+    123,
+    456,
+    789,
+    101
+  ],
+  "sample_size": 50000,
+  "representations": [
+    "tfidf",
+    "word2vec",
+    "doc2vec",
+    "sbert"
+  ],
+  "clustering_methods": [
+    "kmeans",
+    "dbscan",
+    "hdbscan",
+    "agglomerative",
+    "gmm"
+  ],
+  "best_representations": [
+    "tfidf",
+    "word2vec"
+  ],
+  "best_pipeline": {
+    "representation": "tfidf",
+    "clustering_method": "hdbscan",
+    "silhouette_mean": 0.9283946514129638
+  },
+  "top_representations": 2,
+  "sbert_device": "auto",
+  "metric_sample_size": 10000,
+  "elapsed_seconds": 8010.981
+}

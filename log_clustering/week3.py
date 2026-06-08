@@ -59,6 +59,36 @@ def _safe_filename(*parts: Any) -> str:
     return "_".join(str(part).strip().lower().replace(" ", "_").replace("/", "_") for part in parts)
 
 
+def _week3_progress_path(output_dir: Path) -> Path:
+    normalized = output_dir.as_posix().rstrip("/")
+    if normalized.endswith("reports/week3"):
+        return Path("week_progress") / "WEEK3_PROGRESS.md"
+    return output_dir / "WEEK3_PROGRESS.md"
+
+
+def _visualization_time_row(
+    *,
+    representation: str,
+    clustering_method: str,
+    visualization_method: str,
+    stage: str,
+    elapsed_s: float,
+    output_path: Path,
+    status: str = "ok",
+    error: str = "",
+) -> dict[str, Any]:
+    return {
+        "representation": representation,
+        "clustering_method": clustering_method,
+        "visualization_method": visualization_method,
+        "stage": stage,
+        "elapsed_s": round(elapsed_s, 6),
+        "output_path": str(output_path),
+        "status": status,
+        "error": error,
+    }
+
+
 def _load_week2_table(path: Path, name: str) -> pd.DataFrame:
     if not path.exists():
         raise FileNotFoundError(f"Missing Week 2 {name}: {path}")
@@ -315,6 +345,58 @@ def _plot_dendrogram(matrix: np.ndarray, *, title: str, output_path: Path, max_p
     plt.close()
 
 
+def _save_scatter_grids(
+    output_dir: Path,
+    *,
+    scatter_methods: list[str],
+    representations: list[str],
+    clustering_methods: list[str],
+) -> pd.DataFrame:
+    rows: list[dict[str, Any]] = []
+    grid_dir = output_dir / "scatter_grids"
+    grid_dir.mkdir(parents=True, exist_ok=True)
+    for scatter_method in scatter_methods:
+        plot_items: list[tuple[str, Path]] = []
+        for representation in representations:
+            for method in clustering_methods:
+                path = (
+                    output_dir
+                    / "scatter"
+                    / scatter_method
+                    / f"{_safe_filename(representation, method, scatter_method)}.png"
+                )
+                if path.exists() and path.stat().st_size > 0:
+                    plot_items.append((f"{representation}+{method}", path))
+        grid_path = grid_dir / f"{scatter_method}_grid.png"
+        status = "ok" if plot_items else "skipped"
+        if plot_items:
+            columns = min(5, max(1, len(clustering_methods)))
+            rows_count = math.ceil(len(plot_items) / columns)
+            fig, axes = plt.subplots(rows_count, columns, figsize=(columns * 4.0, rows_count * 3.2))
+            axes_array = np.atleast_1d(axes).ravel()
+            for ax, (title, path) in zip(axes_array, plot_items):
+                ax.imshow(plt.imread(path))
+                ax.set_title(title, fontsize=9)
+                ax.axis("off")
+            for ax in axes_array[len(plot_items):]:
+                ax.axis("off")
+            fig.suptitle(f"{scatter_method.upper()} scatter grid", fontsize=14)
+            fig.tight_layout()
+            fig.savefig(grid_path, dpi=140)
+            plt.close(fig)
+        rows.append(
+            {
+                "visualization_method": scatter_method,
+                "plot_count": len(plot_items),
+                "output_path": str(grid_path),
+                "status": status,
+            }
+        )
+    index = pd.DataFrame(rows)
+    index.to_csv(output_dir / "scatter_grid_index_week3.csv", index=False)
+    return index
+
+
 def _source_purity(source_rows: pd.DataFrame) -> float:
     if source_rows.empty:
         return float("nan")
@@ -511,12 +593,14 @@ def _write_markdown_report(
         "- `sample_metadata_week3.csv`: sample event yang dipakai untuk visualisasi dan rekonstruksi label.",
         "- `labels/*.csv`: label cluster per event untuk setiap kombinasi representasi dan clustering.",
         "- `scatter/{pca,umap,tsne}/*.png`: scatter plot 2D per kombinasi.",
+        "- `scatter_grids/*.png`: montage/grid scatter plot per metode visualisasi.",
         "- `dendrograms/*.png`: dendrogram untuk Agglomerative Clustering per representasi.",
         "- `timelines/*.png`: visualisasi datetime vs cluster.",
         "- `source_distribution/*.png`: distribusi source pada cluster terbesar.",
         "- `top_terms/*.png`: ringkasan token dominan pada cluster terbesar.",
         "- `interpretability_assessment_week3.csv`: skor interpretabilitas level kombinasi.",
         "- `cluster_interpretability_week3.csv`: skor interpretabilitas cluster penting.",
+        "- `visualization_times_week3.csv`: waktu reduksi dan render PCA/UMAP/t-SNE.",
         "",
         "## Kombinasi Dengan Silhouette Tertinggi",
         "",
@@ -565,7 +649,9 @@ def _write_markdown_report(
         "- Full 5-seed execution, k-sensitivity, dan cross-dataset validation tetap masuk ruang Pekan 4.",
         "",
     ]
-    (output_dir / "WEEK3_PROGRESS.md").write_text("\n".join(lines), encoding="utf-8")
+    report_path = _week3_progress_path(output_dir)
+    report_path.parent.mkdir(parents=True, exist_ok=True)
+    report_path.write_text("\n".join(lines), encoding="utf-8")
 
 
 def run_week3(
@@ -641,6 +727,7 @@ def run_week3(
     label_dir = output_dir / "labels"
     label_dir.mkdir(parents=True, exist_ok=True)
     generated_files: list[str] = []
+    visualization_time_rows: list[dict[str, Any]] = []
     labels_by_combo: dict[tuple[str, str], np.ndarray] = {}
     matrix_by_representation: dict[str, np.ndarray] = {}
     coords_by_representation: dict[tuple[str, str], np.ndarray] = {}
@@ -689,13 +776,33 @@ def run_week3(
         for scatter_method in scatter_methods:
             stage_start = time.perf_counter()
             _progress(f"  Reduksi 2D {scatter_method.upper()} untuk {representation}...", verbose=verbose)
-            coords_by_representation[(representation, scatter_method)] = _reduce_2d(
-                viz_matrix,
-                scatter_method,
-                seed=seed,
-                perplexity=perplexity,
-                n_neighbors=umap_neighbors,
-            )
+            status = "ok"
+            error = ""
+            try:
+                coords_by_representation[(representation, scatter_method)] = _reduce_2d(
+                    viz_matrix,
+                    scatter_method,
+                    seed=seed,
+                    perplexity=perplexity,
+                    n_neighbors=umap_neighbors,
+                )
+            except Exception as exc:
+                status = "failed"
+                error = str(exc)[:500]
+                raise
+            finally:
+                visualization_time_rows.append(
+                    _visualization_time_row(
+                        representation=representation,
+                        clustering_method="all",
+                        visualization_method=scatter_method,
+                        stage="reduction",
+                        elapsed_s=time.perf_counter() - stage_start,
+                        output_path=output_dir / "scatter" / scatter_method,
+                        status=status,
+                        error=error,
+                    )
+                )
             _progress(
                 f"  {scatter_method.upper()} selesai dalam {_format_elapsed(time.perf_counter() - stage_start)}",
                 verbose=verbose,
@@ -742,12 +849,33 @@ def run_week3(
                     / scatter_method
                     / f"{_safe_filename(representation, method, scatter_method)}.png"
                 )
-                _plot_scatter(
-                    coords,
-                    labels[viz_indices],
-                    title=f"{scatter_method.upper()} - {representation} + {method}",
-                    output_path=scatter_path,
-                )
+                scatter_start = time.perf_counter()
+                status = "ok"
+                error = ""
+                try:
+                    _plot_scatter(
+                        coords,
+                        labels[viz_indices],
+                        title=f"{scatter_method.upper()} - {representation} + {method}",
+                        output_path=scatter_path,
+                    )
+                except Exception as exc:
+                    status = "failed"
+                    error = str(exc)[:500]
+                    raise
+                finally:
+                    visualization_time_rows.append(
+                        _visualization_time_row(
+                            representation=representation,
+                            clustering_method=method,
+                            visualization_method=scatter_method,
+                            stage="scatter_render",
+                            elapsed_s=time.perf_counter() - scatter_start,
+                            output_path=scatter_path,
+                            status=status,
+                            error=error,
+                        )
+                    )
                 generated_files.append(str(scatter_path))
 
             timeline_path = output_dir / "timelines" / f"{_safe_filename(representation, method)}_timeline.png"
@@ -802,6 +930,21 @@ def run_week3(
     cluster_interpretability_df.to_csv(cluster_interpretability_path, index=False)
     generated_files.extend([str(interpretability_path), str(cluster_interpretability_path)])
 
+    scatter_grid_index = _save_scatter_grids(
+        output_dir,
+        scatter_methods=scatter_methods,
+        representations=representations,
+        clustering_methods=clustering_methods,
+    )
+    if not scatter_grid_index.empty:
+        generated_files.extend(scatter_grid_index["output_path"].astype(str).tolist())
+    generated_files.append(str(output_dir / "scatter_grid_index_week3.csv"))
+
+    visualization_times_path = output_dir / "visualization_times_week3.csv"
+    visualization_times_df = pd.DataFrame(visualization_time_rows)
+    visualization_times_df.to_csv(visualization_times_path, index=False)
+    generated_files.append(str(visualization_times_path))
+
     run_summary = {
         "input_file": str(input_path),
         "week2_dir": str(week2_dir),
@@ -822,7 +965,7 @@ def run_week3(
         interpretability_df=interpretability_df,
         run_summary=run_summary,
     )
-    generated_files.extend([str(output_dir / "run_config_week3.json"), str(output_dir / "WEEK3_PROGRESS.md")])
+    generated_files.extend([str(output_dir / "run_config_week3.json"), str(_week3_progress_path(output_dir))])
     run_summary["generated_file_count"] = len(generated_files)
     (output_dir / "run_config_week3.json").write_text(json.dumps(run_summary, indent=2), encoding="utf-8")
     _progress(f"Week 3 selesai. Generated files: {len(generated_files)}", verbose=verbose)

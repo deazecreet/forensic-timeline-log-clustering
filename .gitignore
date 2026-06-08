@@ -23,8 +23,18 @@ reports/**/*.joblib
 reports/**/*.pkl
 reports/**/*.npy
 reports/**/*.npz
+reports/**/*.log
+reports/**/cache/
+reports/**/labels/
 reports/**/sample*.csv
+reports/**/sample_metadata*.csv
 reports/**/embeddings*
+
+# Large Week 4 working outputs; keep compact summary CSV/MD and final plot PNGs trackable
+reports/week4_pilot/
+reports/week4/primary_*_seed*/
+reports/week4/secondary_best_seed*/
+reports/week4/plots/wordclouds_full/
 
 # Local week progress notes
 week_progress/
