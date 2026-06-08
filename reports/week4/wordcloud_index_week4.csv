@@ -1,0 +1,14 @@
+representation,clustering_method,cluster_id,size,top_tokens,output_path,status
+tfidf,hdbscan,201,11643,source_file; path_token; lnk; wav; disk; management; foreground; control; party; notices; txt; powerandsleep,reports\week4\plots\wordclouds\tfidf_hdbscan_cluster_201.png,ok
+tfidf,hdbscan,195,3250,path_token; source_file; directory; windowspowershell; menu; storage; stage; mail; dictionary; tasks; profiles; photo,reports\week4\plots\wordclouds\tfidf_hdbscan_cluster_195.png,ok
+tfidf,hdbscan,183,2190,path_token; source_file; sdks,reports\week4\plots\wordclouds\tfidf_hdbscan_cluster_183.png,ok
+tfidf,hdbscan,236,2077,path_token; source_file; visual; studio; tmlanguage,reports\week4\plots\wordclouds\tfidf_hdbscan_cluster_236.png,ok
+tfidf,hdbscan,202,1731,path_token; source_file; icons; san; tokens; journal; browser,reports\week4\plots\wordclouds\tfidf_hdbscan_cluster_202.png,ok
+tfidf,hdbscan,182,1426,path_token; source_file; sdks; directory,reports\week4\plots\wordclouds\tfidf_hdbscan_cluster_182.png,ok
+tfidf,hdbscan,192,1101,num_token; path_token; source_reg; deriveddata; winbuild; componentfamilies; someunparsedversionsexist; reg_binary,reports\week4\plots\wordclouds\tfidf_hdbscan_cluster_192.png,ok
+tfidf,hdbscan,206,1052,path_token; source_reg; hkey_local_machine; reg_none; num_token; parameters; wmp; assocfile; management; search; diagnostic; pack,reports\week4\plots\wordclouds\tfidf_hdbscan_cluster_206.png,ok
+tfidf,hdbscan,48,1011,path_token; num_token; source_reg; deriveddata; winbuild; componentfamilies,reports\week4\plots\wordclouds\tfidf_hdbscan_cluster_48.png,ok
+tfidf,hdbscan,140,906,path_token; source_file; kits; verifier; menu; wow; lnk,reports\week4\plots\wordclouds\tfidf_hdbscan_cluster_140.png,ok
+tfidf,hdbscan,280,642,source_reg; hkey_local_machine; path_token; reg_sz; iasyncoperationcompletedhandler_; ivectorview_; iiterator_; __x_windows_cdevices_ci; __x_windows_cai_cmachinelearning_citensoruint; bit; iprinting; msinkaut,reports\week4\plots\wordclouds\tfidf_hdbscan_cluster_280.png,ok
+tfidf,hdbscan,176,521,num_token; reg_binary; ad; bf; reg_dword_le; source_reg; path_token; deriveddata; identity; oyment; dll; deployment_,reports\week4\plots\wordclouds\tfidf_hdbscan_cluster_176.png,ok
+tfidf,hdbscan,aggregate,27550,aggregate top_tokens from 12 largest tfidf+hdbscan clusters,reports\week4\plots\wordclouds\tfidf_hdbscan_aggregate.png,ok

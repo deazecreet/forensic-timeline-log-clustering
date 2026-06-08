@@ -1,6 +1,6 @@
 # Log Clustering for Forensic Timeline Analysis
 
-Repository ini berisi implementasi mini project **Log Clustering for Forensic Timeline Analysis** pada output CSV log2timeline/Plaso. Saat ini repository sudah mencakup pipeline Pekan 1, Pekan 2, dan Pekan 3.
+Repository ini berisi implementasi mini project **Log Clustering for Forensic Timeline Analysis** pada output CSV log2timeline/Plaso. Saat ini repository sudah mencakup pipeline Pekan 1, Pekan 2, Pekan 3, dan finalisasi Pekan 4.
 
 ## Dataset
 
@@ -12,6 +12,7 @@ Dataset yang digunakan adalah `scenario-1` dari Zenodo:
 - File lokal yang dipakai: `timeline.csv`
 
 `timeline.csv` tidak dimasukkan ke Git karena ukurannya besar. Letakkan file tersebut di root repository sebelum menjalankan pipeline.
+Dataset kedua untuk cross-dataset validation diletakkan secara lokal di `data/external/timeline.csv`; folder `data/external/` juga di-ignore dari Git.
 
 ## Pekan 1
 
@@ -61,7 +62,7 @@ Catatan progress detail tersedia secara lokal di `week_progress/`, tetapi folder
 | Pekan 1 | Selesai | `reports/week1/` |
 | Pekan 2 | Selesai | `reports/week2/` |
 | Pekan 3 | Selesai | `reports/week3/` |
-| Pekan 4 | Belum dilakukan | Full 5-seed run, k-sensitivity, cross-dataset validation, final report |
+| Pekan 4 | Selesai | `reports/week4/` |
 
 ## Instalasi
 
@@ -135,8 +136,6 @@ Output utama:
 
 - `reports/week3/interpretability_assessment_week3.csv`
 - `reports/week3/cluster_interpretability_week3.csv`
-- `reports/week3/sample_metadata_week3.csv`
-- `reports/week3/labels/*.csv`
 - `reports/week3/scatter/pca/*.png`
 - `reports/week3/scatter/umap/*.png`
 - `reports/week3/scatter/tsne/*.png`
@@ -144,6 +143,10 @@ Output utama:
 - `reports/week3/timelines/*.png`
 - `reports/week3/source_distribution/*.png`
 - `reports/week3/top_terms/*.png`
+- `reports/week3/scatter_grids/*.png`
+- `reports/week3/visualization_times_week3.csv`
+
+Artefak besar/regenerable seperti `reports/week3/sample_metadata_week3.csv` dan `reports/week3/labels/*.csv` dibuat saat pipeline berjalan, tetapi di-ignore dari Git agar repository tetap ringan.
 
 Catatan: SBERT memakai model `all-MiniLM-L6-v2` dan akan mengunduh model dari Hugging Face pada run pertama jika belum ada di cache lokal. Opsi `--sbert-device auto` akan memakai GPU CUDA jika PyTorch mendeteksinya; gunakan `--sbert-device cuda` jika ingin memaksa GPU dan gagal cepat ketika CUDA belum aktif.
 
@@ -152,6 +155,63 @@ Jika PC memiliki NVIDIA GPU tetapi `torch.cuda.is_available()` masih `False`, in
 ```bash
 python -m pip install --upgrade --force-reinstall torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
 ```
+
+## Menjalankan Finalisasi Pekan 4
+
+Pipeline Pekan 4 mengagregasi lima primary optimal seed, memilih dua representasi terbaik untuk k-sensitivity, menjalankan best quality pipeline pada dataset kedua, dan menulis artefak laporan final. Best quality pipeline dipilih dari `silhouette_mean` tertinggi pada `reports/week4/metrics_primary_summary.csv`; skor multi-metrik di `reports/week4/multi_metric_scores_week4.csv` dipakai sebagai analisis balanced quality-efficiency, bukan sebagai kriteria utama cross-dataset validation.
+
+```bash
+python -m log_clustering.week4 --primary-input timeline.csv --secondary-input data/external/timeline.csv --output reports/week4 --seeds 42,123,456,789,101 --sbert-device auto
+```
+
+Jika eksperimen final sudah selesai dan hanya ingin membuat ulang visual polish literal PDF tanpa mengulang run berat:
+
+```bash
+python -m log_clustering.week4 --polish-only --output reports/week4 --week3-dir reports/week3
+```
+
+Untuk menutup audit literal PDF terakhir dari artefak yang sudah ada:
+
+```bash
+python -m log_clustering.week4 --literal-pdf-completion --output reports/week4 --week3-dir reports/week3
+```
+
+Output utama:
+
+- `reports/week4/metrics_primary_runs.csv`
+- `reports/week4/metrics_primary_summary.csv`
+- `reports/week4/metrics_k_sensitivity.csv`
+- `reports/week4/metrics_k_sensitivity_summary.csv`
+- `reports/week4/metrics_cross_dataset.csv`
+- `reports/week4/cross_dataset_comparison.csv`
+- `reports/week4/best_methods_week4.csv`
+- `reports/week4/run_config_week4.json`
+- `reports/week4/PDF_REQUIREMENT_AUDIT.md`
+- `reports/week4/pdf_requirement_traceability_week4.csv`
+- `notebooks/final_result.ipynb`
+
+Notebook final `notebooks/final_result.ipynb` adalah notebook ringan untuk menyusun tabel bagian 4.4, performa komputasi 4.4b, visualisasi 4.5, dan traceability requirement PDF dari artefak final. Output cell notebook sengaja dikosongkan agar aman untuk GitHub; jalankan notebook untuk merender ulang tabel dan gambar.
+
+Polish literal PDF:
+
+- Critical Difference/Friedman-Nemenyi: `reports/week4/cd_friedman_nemenyi_week4.csv`, `reports/week4/plots/critical_difference_primary_silhouette.png`
+- Radar/spider chart multi-metrik: `reports/week4/multi_metric_scores_week4.csv`, `reports/week4/plots/radar_multi_metric_top5.png`
+- Pareto front Silhouette vs computation time: `reports/week4/pareto_front_week4.csv`, `reports/week4/plots/pareto_silhouette_runtime.png`
+- Word cloud literal best pipeline `tfidf + hdbscan`: `reports/week4/wordcloud_index_week4.csv`, `reports/week4/plots/wordclouds/*.png`
+- Visualization time metric: `reports/week4/visualization_times_week4.csv`
+
+Completion literal PDF:
+
+- Traceability audit: `reports/week4/PDF_REQUIREMENT_AUDIT.md`, `reports/week4/pdf_requirement_traceability_week4.csv`
+- Visualization time PCA/UMAP/t-SNE: `reports/week3/visualization_times_week3.csv`
+- Scatter montage/grid: `reports/week3/scatter_grids/*.png`, `reports/week3/scatter_grid_index_week3.csv`
+- K-sensitivity k=10/20/50 summary: `reports/week4/k_sensitivity_trials_week4.csv`, `reports/week4/k_sensitivity_by_k_week4.csv`
+- K-optimal diagnostic: `reports/week4/k_optimal_diagnostics_week4.csv`, `reports/week4/plots/k_diagnostics_*.png`
+- Final mean heatmap: `reports/week4/primary_silhouette_heatmap_mean.csv`, `reports/week4/plots/primary_silhouette_heatmap_mean.png`
+- Full best-pipeline word cloud: `reports/week4/wordcloud_full_index_week4.csv`; PNG lengkap di `reports/week4/plots/wordclouds_full/*.png` bersifat lokal/regenerable dan di-ignore dari Git
+- Interpretability review-ready artifact: `reports/week4/manual_interpretability_review_week4.csv`
+
+Artefak kerja Pekan 4 seperti `reports/week4/primary_*_seed*/`, `reports/week4/secondary_best_seed*/`, cache embedding, log, dan `reports/week4_pilot/` sengaja di-ignore. Artefak tersebut bisa dibuat ulang dari pipeline dan tidak perlu ikut commit.
 
 ## Preprocessing
 

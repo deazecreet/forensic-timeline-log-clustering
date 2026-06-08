@@ -1,0 +1,14 @@
+requirement,category,status,evidence_path,note
+Dataset primer minimum 50.000 event,core,fulfilled,reports\week4\metrics_primary_runs.csv,100 rows.
+4 representasi x 5 clustering x 5 seed = 100 run,core,fulfilled,reports\week4\metrics_primary_runs.csv,100 rows.
+Summary 20 kombinasi rata-rata 5 seed,core,fulfilled,reports\week4\metrics_primary_summary.csv,20 rows.
+K-sensitivity k=10/20/50 eksplisit,literal polish,fulfilled,reports\week4\k_sensitivity_by_k_week4.csv,84 rows.
+Cross-dataset validation best pipeline,core,fulfilled,reports\week4\cross_dataset_comparison.csv,1 rows.
+PCA/UMAP/t-SNE 60 scatter plots,literal polish,fulfilled,reports\week3\scatter,60 individual scatter PNGs and 3 grid PNGs.
+Visualization time PCA/UMAP/t-SNE,literal polish,fulfilled,reports\week3\visualization_times_week3.csv,72 rows.
+Critical Difference/Friedman-Nemenyi,literal polish,fulfilled,reports\week4\cd_friedman_nemenyi_week4.csv,20 rows.
+Radar/spider chart multi-metrik,literal polish,fulfilled,reports\week4\multi_metric_scores_week4.csv,20 rows.
+Pareto front kualitas vs waktu,literal polish,fulfilled,reports\week4\pareto_front_week4.csv,20 rows.
+Word cloud literal best pipeline,literal polish,fulfilled,reports\week4\wordcloud_full_index_week4.csv,367 rows.
+Interpretability review-ready 1-5 proxy,literal polish,fulfilled,reports\week4\manual_interpretability_review_week4.csv,19 rows.
+Final report dan dokumentasi,core,fulfilled,notebooks\final_result.ipynb; reports\week4\PDF_REQUIREMENT_AUDIT.md,Notebook final dan audit requirement tersedia sebagai artefak trackable.

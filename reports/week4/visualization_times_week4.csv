@@ -1,0 +1,5 @@
+artifact_name,visualization_type,input_source,elapsed_s,output_path,status,error
+critical_difference_primary_silhouette,critical_difference_friedman_nemenyi,reports\week4\metrics_primary_runs.csv,0.11261,reports\week4\plots\critical_difference_primary_silhouette.png,ok,
+radar_multi_metric_top5,radar_spider_chart,reports\week4\metrics_primary_summary.csv,0.098412,reports\week4\plots\radar_multi_metric_top5.png,ok,
+pareto_silhouette_runtime,pareto_front,reports\week4\metrics_primary_summary.csv,0.081577,reports\week4\plots\pareto_silhouette_runtime.png,ok,
+tfidf_hdbscan_wordclouds,word_cloud,reports\week3\cluster_interpretability_week3.csv,2.625461,reports\week4\plots\wordclouds,ok,

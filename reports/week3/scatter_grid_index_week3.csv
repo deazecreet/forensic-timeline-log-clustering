@@ -1,0 +1,4 @@
+visualization_method,plot_count,output_path,status
+pca,20,reports\week3\scatter_grids\pca_grid.png,ok
+umap,20,reports\week3\scatter_grids\umap_grid.png,ok
+tsne,20,reports\week3\scatter_grids\tsne_grid.png,ok

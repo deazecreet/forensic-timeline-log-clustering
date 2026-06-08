@@ -72,6 +72,9 @@ def test_week3_pipeline_smoke(tmp_path):
         "sample_metadata_week3.csv",
         "labels/tfidf_kmeans_labels.csv",
         "scatter/pca/tfidf_kmeans_pca.png",
+        "scatter_grids/pca_grid.png",
+        "scatter_grid_index_week3.csv",
+        "visualization_times_week3.csv",
         "timelines/tfidf_kmeans_timeline.png",
         "source_distribution/tfidf_kmeans_source.png",
         "top_terms/tfidf_kmeans_top_terms.png",
@@ -84,4 +87,10 @@ def test_week3_pipeline_smoke(tmp_path):
     interpretability = pd.read_csv(week3_dir / "interpretability_assessment_week3.csv")
     assert set(interpretability["representation"]) == {"tfidf"}
     assert set(interpretability["clustering_method"]) == {"kmeans"}
+    visualization_times = pd.read_csv(week3_dir / "visualization_times_week3.csv")
+    assert not visualization_times.empty
+    assert set(visualization_times["visualization_method"]) == {"pca"}
+    assert (visualization_times["status"] == "ok").any()
+    scatter_grid_index = pd.read_csv(week3_dir / "scatter_grid_index_week3.csv")
+    assert set(scatter_grid_index["status"]) == {"ok"}
     assert result["run_summary"]["generated_file_count"] >= len(expected_files)
