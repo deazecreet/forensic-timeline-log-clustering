@@ -1,0 +1,16 @@
+visualization,status,output_path,note
+Skenario 1 - kualitas clustering,created,reports\week4\plots\scenario_analysis\scenario_1_clustering_quality.png,
+Skenario 2 - performa komputasi,created,reports\week4\plots\scenario_analysis\scenario_2_computational_performance.png,
+Skenario 3 - jumlah cluster dan noise ratio,created,reports\week4\plots\scenario_analysis\scenario_3_clusters_and_noise.png,
+Skenario 4 - ringkasan K-sensitivity,created,reports\week4\plots\scenario_analysis\scenario_4_k_sensitivity_summary.png,
+Skenario 5 - K-sensitivity eksplisit,created,reports\week4\plots\scenario_analysis\scenario_5_explicit_k_sensitivity.png,
+Skenario 6 - cross-dataset validation,created,reports\week4\plots\scenario_analysis\scenario_6_cross_dataset_validation.png,
+Skenario 7 - waktu reduksi visualisasi,created,reports\week4\plots\scenario_analysis\scenario_7_reduction_time.png,
+Skenario 8 - forensic interpretability proxy,created,reports\week4\plots\scenario_analysis\scenario_8_interpretability_proxy.png,
+K-optimal diagnostics - tfidf,created,reports\week4\plots\scenario_analysis\k_optimal_diagnostics_tfidf.png,
+K-optimal diagnostics - word2vec,created,reports\week4\plots\scenario_analysis\k_optimal_diagnostics_word2vec.png,
+K-optimal diagnostics - doc2vec,created,reports\week4\plots\scenario_analysis\k_optimal_diagnostics_doc2vec.png,
+K-optimal diagnostics - sbert,created,reports\week4\plots\scenario_analysis\k_optimal_diagnostics_sbert.png,
+Radar multi-metrik per representasi,created,reports\week4\plots\scenario_analysis\radar_metrics_by_representation.png,
+Friedman-Nemenyi CD reference,created,reports\week4\plots\scenario_analysis\friedman_nemenyi_cd_reference.png,
+Full word cloud per all clusters,skipped,,Tracked repository contains 12 cluster PNGs plus one aggregate; full 367-cluster PNG set is not present.
