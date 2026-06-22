@@ -1,6 +1,7 @@
 # Local raw dataset and downloaded archives
 timeline.csv
 Log clustering.pdf
+*.pdf
 data/raw/
 data/external/
 *.zip
